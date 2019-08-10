@@ -21,7 +21,7 @@ export class Routes extends PureComponent {
   render () {
     return (
       <Switch>
-        <AppRoute exact path='/articles/' layout={MainLayout} component={MainPage} t={2} />
+        <AppRoute exact path='/' layout={MainLayout} component={MainPage} t={2} />
         
       </Switch>
     )

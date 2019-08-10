@@ -18,7 +18,7 @@ export class App extends Component {
 
     // TODO: Add loader
     if (isAppInitializing) {
-      return <div></div>
+      return <div>222</div>
     }
 
     return (
