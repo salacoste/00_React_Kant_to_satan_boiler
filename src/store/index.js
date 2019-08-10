@@ -28,6 +28,7 @@ export default function configureStore () {
 
   const rootReducer = enableBatching(combineReducers({
     example
+    // add reducers
   }))
 
   const store = createStore(rootReducer, enhancer)
