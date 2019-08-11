@@ -8,7 +8,7 @@ class MainLayout extends PureComponent {
     return (
       <Wrapper >
         <Navbar bg="dark" expand="lg" variant="dark" >
-          <Navbar.Brand href="#home">Article Main Page</Navbar.Brand>
+          <Navbar.Brand>Article Main Page</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
@@ -24,7 +24,7 @@ class MainLayout extends PureComponent {
 }
 
 const Wrapper = styled.div`
-  height: 100%
+  height: 100%,
 `
 
 export default MainLayout
