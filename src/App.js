@@ -8,17 +8,33 @@ import theme from './utils/theme'
 import Router from 'src/router'
 
 export class App extends Component {
+  state = {
+    isLoaded: false
+  }
+
+  asyncF = async () => {
+    await setTimeout(()=> {
+      this.setState({isLoaded: true})
+      console.log('done!')
+    }, 2000)
+  }
 
   componentWillMount() {
     // this.props.loadSession()
+    this.asyncF()
   }
 
   render() {
-    const { isAppInitializing } = this.props
+    const {isLoaded} = this.state
+    // const { isAppInitializing } = this.props
 
     // TODO: Add loader
-    if (isAppInitializing) {
-      return <div>222</div>
+    if (!isLoaded) {
+      return (<div className="row">
+        <div className="col-sm-12">
+        <p>Loading...</p>
+        </div>
+      </div>)
     }
 
     return (
@@ -29,8 +45,8 @@ export class App extends Component {
   }
 }
 
-const mapStateToProps = () => ({
-  isAppInitializing: false
+const mapStateToProps = (state) => ({
+  isAppInitializing: this.asyncF
 })
 
 const mapDispatchToProps = {

@@ -1,36 +1,59 @@
 import React, {PureComponent, Fragment} from 'react'
-import {Accordion, Card} from 'react-bootstrap'
-
+import {Accordion, Card, Button} from 'react-bootstrap'
+import {CommentList} from '../commentsList/commentsList'
 
 class ArticleList extends PureComponent {
+  
   constructor(props){
     super(props)
     this.state = {
-
+      articles: [],
+      defaultActiveKey: undefined,
+      comments: [],
     }
   }
 
+  handlerComments = (id) => {
+    //handler for Comment Open/Close button
+    this.props.loadArticles()
+  }
+
+  getArticles = () => {
+    return this.props.articles.map((item)=> {
+      return (
+      <Card key={item.id}>
+        <Card.Body>
+          <small>Date: {item.date}</small>
+          <h3>{item.title}</h3>
+        </Card.Body>
+        <Accordion.Toggle as={Card.Header} eventKey={item.id}>
+        Show more..
+        </Accordion.Toggle>
+        <Accordion.Collapse eventKey={item.id}>
+          <div>
+          <Card.Body>
+          <p>
+            {item.text}
+          </p>
+          <CommentList handlerComments={this.handlerComments}/>
+          </Card.Body>
+          </div>
+        </Accordion.Collapse>
+      </Card> 
+      )})
+  }
+  componentDidMount() {
+  // this.setState({articles: normalizedArticles, defaultActiveKey: normalizedArticles[0].id})
+  }
+  
   render() {
-  return (<Fragment>
-    <Accordion defaultActiveKey="0">
-      <Card>
-        <Accordion.Toggle as={Card.Header} eventKey="0">
-          Click me!
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey="0">
-          <Card.Body>Hello! I'm the body</Card.Body>
-        </Accordion.Collapse>
-      </Card>
-      <Card>
-        <Accordion.Toggle as={Card.Header} eventKey="1">
-          Click me!
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey="1">
-          <Card.Body>Hello! I'm another body</Card.Body>
-        </Accordion.Collapse>
-      </Card>
+  return (
+  <Fragment>
+    <Accordion defaultActiveKey={this.state.defaultActiveKey || "0"}>
+    {this.getArticles()}
     </Accordion>
-  </Fragment>)
+  </Fragment>
+  )
   }
 
 

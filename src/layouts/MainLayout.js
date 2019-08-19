@@ -5,6 +5,7 @@ let {Navbar, Nav, Form, FormControl, Button, NavDropdown, Row, Container} = Boot
 
 class MainLayout extends PureComponent {
   render () {
+    console.log('MainLayout props', this.props)
     return (
       <Wrapper >
             <Navbar bg="dark" expand="lg" variant="dark" >
