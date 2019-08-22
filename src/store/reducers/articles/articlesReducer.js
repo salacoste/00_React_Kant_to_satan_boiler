@@ -1,5 +1,6 @@
 import { handleActions, createAction } from 'redux-actions'
 import Immutable from 'seamless-immutable'
+import axios from 'axios'
 
 // ---
 // CONSTANTS
@@ -9,6 +10,14 @@ export const ARTICLES_START = 'articles/START'
 export const ARTICLES_LOADING = 'articles/LOADING'
 export const ARTICLES_LOADED = 'articles/LOADED'
 export const ARTICLES_ERROR = 'articles/ERROR'
+
+
+/// ---
+// AXIOS CONSTANTS
+/// ---
+
+const url = 'https://5b1eb7944d4fc00014b07e1e.mockapi.io/kantor_articles'
+
 
 // ---
 // ACTION CREATORS
@@ -24,12 +33,19 @@ export const articles_error = createAction(ARTICLES_ERROR)
 // ---
 
 const initialState = Immutable({
-articles: {
   entities: {},
   error: false,
   loading: false,
-}
 })
+
+const arrayToObject = (arr) => {
+  arr.reduce((acc, current, i) => {
+    console.log('i is ' + i, acc, current)
+    acc[current.id] = current
+    return acc
+  }, {})
+}
+
 
 
 // ---
@@ -39,39 +55,18 @@ articles: {
 export default handleActions(
   {
     [ARTICLES_LOADING]: (state, action) => {
-      console.log('reducer ARTICLES START LOADING', action)
+      console.log('reducer ARTICLES START LOADING action', action)
+      axios.get(url)
+      .then((r)=> {
+        console.log('array to Object', arrayToObject(r.data))
+        
+        console.log('rrrr', r.data)
+        return Immutable.setIn
+      })
+      .catch((e)=> {
+        console.log('Error is occured', e)
+      })
       return Immutable.merge(state, { loading: true } )},
-    [ARTICLES_ERROR]: (state, action) =>
-      Immutable.merge(state, { text: action.payload }),
-    [ARTICLES_LOADED]: (state, action) =>
-      Immutable.merge(state, { loading: false }),
-    [ARTICLES_START]: (state, action) =>
-      Immutable.merge(state, { text: action.payload })
   },
   initialState
 )
-// import { createReducer } from 'redux-create-reducer'
-// import * as at from 'src/icos/exampleConstants'
-
-// const initialState = {
-//   count: 0,
-//   text: 'Hi!',
-//   isTextDefault: true,
-//   random: 0
-// }
-
-// export default createReducer(initialState, {
-//   [at.INCREMENT]: state => ({ ...state, count: state.count + 1 }),
-
-//   [at.CHANGE_TEXT]: (state, action) => ({
-//     ...state,
-//     text: action.payload.text
-//   }),
-
-//   [at.SET_RANDOM]: (state, action) => ({
-//     ...state,
-//     random: action.payload.random
-//   }),
-
-//   [at.SET_TEXT_CUSTOM]: state => ({ ...state, isTextDefault: false })
-// })

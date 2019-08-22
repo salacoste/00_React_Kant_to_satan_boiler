@@ -2,13 +2,14 @@ import { connect } from 'react-redux'
 import MainPage from './MainPage'
 import {normalizedArticles, normalizedComments} from '../../utils/fixtures'
 import {articles_loading} from '../../store/reducers/articles/articlesReducer'
-import {getArticles} from '../../store/reducers/articles/articlesSelector'
+import {getFilteredArticles} from '../../store/reducers/articles/articlesSelector'
 
 
 const mapStateToProps = (state, props) => {
   console.log('mapStateToProps of Articles', state)
   return {
-  articles: getArticles,
+  l: getFilteredArticles(state, props),
+  articles: normalizedArticles,
   //articles: normalizedArticles,
   comments: normalizedComments,
   }

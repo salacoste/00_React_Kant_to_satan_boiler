@@ -15,7 +15,7 @@ class ArticleList extends PureComponent {
 
   handlerComments = (id) => {
     //handler for Comment Open/Close button
-    this.props.loadArticles()
+    this.props.loadArticles({increment: 22})
   }
 
   getArticles = () => {

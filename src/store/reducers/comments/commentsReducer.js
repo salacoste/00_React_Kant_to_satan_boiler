@@ -25,11 +25,9 @@ export const changeText = createAction(CHANGETEXT)
 // ---
 
 const initialState = Immutable({
-  comments: {
     entities: {},
     error: false,
     loading: false
-  }
 })
 
 // ---
