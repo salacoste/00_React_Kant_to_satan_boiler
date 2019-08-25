@@ -1,24 +1,36 @@
 import React, {PureComponent, Fragment} from 'react'
-import {Accordion, Card, Button} from 'react-bootstrap'
-import {CommentList} from '../commentsList/commentsList'
+import {Accordion, Card, Button, Alert} from 'react-bootstrap'
+import CommentList from '../commentsList/commentsList'
 
 class ArticleList extends PureComponent {
   
   constructor(props){
     super(props)
     this.state = {
-      articles: [],
       defaultActiveKey: undefined,
-      comments: [],
     }
   }
 
   handlerComments = (id) => {
     //handler for Comment Open/Close button
-    this.props.loadArticles({increment: 22})
+    
+  }
+  componentDidMount() {
+    this.props.loadArticles && this.props.loadArticles()
   }
 
   getArticles = () => {
+    if(this.props.articles.length === 0) {
+      return (
+        <Alert variant="danger">
+          Articles are loading or error is occured.
+        </Alert>
+      )
+    }
+    else {
+
+    }
+
     return this.props.articles.map((item)=> {
       return (
       <Card key={item.id}>
@@ -35,15 +47,13 @@ class ArticleList extends PureComponent {
           <p>
             {item.text}
           </p>
-          <CommentList handlerComments={this.handlerComments}/>
+          <CommentList handlerComments={this.handlerComments} loadComments ={this.props.loadComments}  articleId = {item.id} commentsCount = {item.comments? item.comments.length : 0}/> 
+          {/* comments = {this.props.comments} */}
           </Card.Body>
           </div>
         </Accordion.Collapse>
       </Card> 
       )})
-  }
-  componentDidMount() {
-  // this.setState({articles: normalizedArticles, defaultActiveKey: normalizedArticles[0].id})
   }
   
   render() {

@@ -1,33 +1,31 @@
 import { connect } from 'react-redux'
 import MainPage from './MainPage'
 import {normalizedArticles, normalizedComments} from '../../utils/fixtures'
-import {articles_loading} from '../../store/reducers/articles/articlesReducer'
-import {getFilteredArticles} from '../../store/reducers/articles/articlesSelector'
+
+import {articles_thunk} from '../../store/reducers/articles/articlesReducer'
+import {comments_thunk} from '../../store/reducers/comments/commentsReducer'
+
+import {getArticlesInArray} from '../../store/reducers/articles/articlesSelector'
+import {getCommentsInArray} from '../../store/reducers/comments/commentsSelector'
 
 
 const mapStateToProps = (state, props) => {
-  console.log('mapStateToProps of Articles', state)
+  // console.log('mapStateToProps of Articles', state)
   return {
-  l: getFilteredArticles(state, props),
-  articles: normalizedArticles,
+  // l: getFilteredArticles(state, props),
+  articles: getArticlesInArray(state, props),
   //articles: normalizedArticles,
-  comments: normalizedComments,
+  comments: getCommentsInArray(state,props),
   }
 }
 
 
 
 const mapDispatchToProps = {
-  loadArticles: articles_loading
+  loadArticles: articles_thunk,
+  loadComments: comments_thunk,
 }
 
-//  OR Dispatch from function
-//  const mapDispatchToProps = (dispatch, ownProps) => {
-//   return {
-//     example: (argument_from_call)=>{
-//       dispatch(actionCreatorName(ownProps, i))
-//     }
-//   }
-// }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage)

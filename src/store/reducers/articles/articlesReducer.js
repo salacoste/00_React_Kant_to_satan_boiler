@@ -28,22 +28,45 @@ export const articles_loading = createAction(ARTICLES_LOADING)
 export const articles_loaded = createAction(ARTICLES_LOADED)
 export const articles_error = createAction(ARTICLES_ERROR)
 
+export const articles_thunk = ()=> {
+  return (dispatch, getState) => {
+    dispatch(articles_loading())
+
+    // async articles loading
+    axios.get(url)
+      .then((r)=> {
+        const ArticlesObj = arrayToObject(r.data)
+        // console.log('ArticlesToObj', ArticlesObj)
+        dispatch(articles_loaded(ArticlesObj))
+      })
+      .catch((e)=> {
+        console.log('Error is occured', e)
+        dispatch(articles_error(e))
+      })
+
+  }
+}
+
+
 // ---
 // INITIAL STATE
 // ---
 
 const initialState = Immutable({
-  entities: {},
+  entities: {
+  },
   error: false,
   loading: false,
+  loaded: false,
 })
 
-const arrayToObject = (arr) => {
-  arr.reduce((acc, current, i) => {
-    console.log('i is ' + i, acc, current)
+export const arrayToObject = (arr) => {
+  const a =  arr.reduce((acc, current, i) => {
+    // console.log('i is ' + i, acc, current)
     acc[current.id] = current
     return acc
   }, {})
+  return a
 }
 
 
@@ -52,21 +75,21 @@ const arrayToObject = (arr) => {
 // REDUCER
 // ---
 
-export default handleActions(
-  {
-    [ARTICLES_LOADING]: (state, action) => {
-      console.log('reducer ARTICLES START LOADING action', action)
-      axios.get(url)
-      .then((r)=> {
-        console.log('array to Object', arrayToObject(r.data))
-        
-        console.log('rrrr', r.data)
-        return Immutable.setIn
-      })
-      .catch((e)=> {
-        console.log('Error is occured', e)
-      })
-      return Immutable.merge(state, { loading: true } )},
-  },
-  initialState
-)
+
+const reducerMap = {
+  [ARTICLES_LOADING]: (state, action) => {
+      return state.set("loading", true)
+    },
+    [ARTICLES_LOADED]: (state, action) => {
+      const data = action.payload
+      return Immutable.merge(state, {loading: false, entities: {...state.entities, ...data}, loaded: true})
+    },
+    [ARTICLES_ERROR]: (state, action) => {
+      return state.set("error", true)
+    }
+  }
+
+
+export default handleActions(reducerMap, initialState)
+    
+    

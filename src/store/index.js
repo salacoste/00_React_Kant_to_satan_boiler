@@ -8,6 +8,7 @@ import freeze from 'redux-freeze'
 
 import articles from './reducers/articles/articlesReducer'
 import comments from './reducers/comments/commentsReducer'
+import thunk from 'redux-thunk'
 
 import rootSaga from './saga'
 
@@ -25,7 +26,7 @@ const logger = createLogger({
 export default function configureStore () {
   const sagaMiddleware = createSagaMiddleware()
   // add MiddleWares here
-  const middlewares = [sagaMiddleware, logger, freeze]
+  const middlewares = [sagaMiddleware, thunk, logger, freeze]
 
   // TODO: check to disable by default on prod
   const enhancer = composeWithDevTools(

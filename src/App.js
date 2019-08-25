@@ -2,10 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import { withRouter } from 'react-router-dom'
+import {Spinner, Row, Col} from 'react-bootstrap'
+import {Transition, TransitionGroup, CSSTransition} from 'react-transition-group'
 
 import theme from './utils/theme'
 
 import Router from 'src/router'
+
+
+
+
 
 export class App extends Component {
   state = {
@@ -15,7 +21,6 @@ export class App extends Component {
   asyncF = async () => {
     await setTimeout(()=> {
       this.setState({isLoaded: true})
-      console.log('done!')
     }, 2000)
   }
 
@@ -24,29 +29,37 @@ export class App extends Component {
     this.asyncF()
   }
 
+
+  
   render() {
     const {isLoaded} = this.state
-    // const { isAppInitializing } = this.props
 
     // TODO: Add loader
     if (!isLoaded) {
-      return (<div className="row">
-        <div className="col-sm-12">
-        <p>Loading...</p>
-        </div>
-      </div>)
+      return (
+
+      <div className="container-fluid h-100 bg-dark">
+        <Row className="align-items-center h-100">
+          <Col className="text-center">
+            <Spinner animation="border" role="status" className="text-white" />
+            <span className="text-white" style={{"paddingLeft": "15px"}}>I'm doing the best that I can...</span>
+          </Col>
+        </Row>
+      </div>
+    
+        )
     }
 
     return (
       <ThemeProvider theme={theme}>
-        <Router />
+            <Router />
       </ThemeProvider>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  isAppInitializing: this.asyncF
+  
 })
 
 const mapDispatchToProps = {
