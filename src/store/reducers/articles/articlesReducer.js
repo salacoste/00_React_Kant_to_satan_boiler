@@ -2,7 +2,6 @@ import { handleActions, createAction } from 'redux-actions'
 import Immutable from 'seamless-immutable'
 import axios from 'axios'
 
-import {COMMENTS_ADDING} from '../comments/commentsReducer'
 
 // ---
 // CONSTANTS
@@ -12,6 +11,8 @@ export const ARTICLES_START = 'articles/START'
 export const ARTICLES_LOADING = 'articles/LOADING'
 export const ARTICLES_LOADED = 'articles/LOADED'
 export const ARTICLES_ERROR = 'articles/ERROR'
+export const ARTICLES_NEW_COMMENT_ADDING = 'articles/NEW_COMMENT_ID_ADDING'
+
 
 
 /// ---
@@ -29,6 +30,8 @@ export const articles_start = createAction(ARTICLES_START)
 export const articles_loading = createAction(ARTICLES_LOADING)
 export const articles_loaded = createAction(ARTICLES_LOADED)
 export const articles_error = createAction(ARTICLES_ERROR)
+export const articles_new_comments_id_adding = createAction(ARTICLES_NEW_COMMENT_ADDING)
+
 
 export const articles_thunk = ()=> {
   return (dispatch, getState) => {
@@ -89,9 +92,8 @@ const reducerMap = {
     [ARTICLES_ERROR]: (state, action) => {
       return state.set("error", true)
     },
-    [COMMENTS_ADDING]: (state, action) => {
-      console.log('BAAAAM!')
-      return Immutable.setIn(state, ['entities', action.payload.articleId, "comments"], [...state.articles.entities[action.payload.articleId].comments, action.payload.id])
+    [ARTICLES_NEW_COMMENT_ADDING]: (state, action) => {      
+      return Immutable.setIn(state, ['entities', action.payload.articleId, 'comments'], [...state.entities[action.payload.articleId].comments, action.payload.id])
     }
   }
 

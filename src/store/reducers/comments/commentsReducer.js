@@ -3,7 +3,7 @@ import Immutable from 'seamless-immutable'
 import axios from 'axios'
 import {arrayToObject} from '../articles/articlesReducer'
 
-// import {article} from '../articles/articlesReducer'
+import {articles_new_comments_id_adding} from '../articles/articlesReducer'
 
 
 // ---
@@ -53,6 +53,7 @@ export const comments_add_thunk = ({username, text, articleId}) => {
   return (dispatch, getState) => {
     const id = Date.now()
     dispatch(comments_adding({id, username, text, articleId}))
+    dispatch(articles_new_comments_id_adding({id, username, text, articleId}))
   }
 }
 

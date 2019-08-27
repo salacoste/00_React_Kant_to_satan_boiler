@@ -67,7 +67,11 @@ export class CommentList extends PureComponent {
                   initialValues={{username: '', text: ''}}
                   //validationSchema={validationSchema}
                   validate={validate}
-                  onSubmit={(values, { setSubmitting })=> {return onSubmit(values, setSubmitting, this.props.addComment, this.props.articleId, {a: 2333, b: 1111, cc: 'string add'})}}
+                  onSubmit={(values, { setSubmitting, resetForm })=> {
+                    return onSubmit(values, setSubmitting, this.props.addComment, this.props.articleId, resetForm,
+                      {a: 2333, b: 1111, cc: 'string add'})
+                    }
+                  }
                   render={render}
                   /> 
               </ListGroup.Item>
@@ -91,12 +95,13 @@ const validate = values => {
   return errors;
 }
 
-const onSubmit = (values, setSubmitting, add_comment, articleId, ...rest) => {
+const onSubmit = (values, setSubmitting, add_comment, articleId, resetForm, ...rest) => {
   console.log('222333', values, add_comment, rest)
     setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
+      //alert(JSON.stringify(values, null, 2));
       add_comment({...values, articleId})
       setSubmitting(false);
+      resetForm()
     }, 400);
 }
 
