@@ -1,4 +1,4 @@
-import { combineReducers, createStore, applyMiddleware } from 'redux'
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux'
 import { composeWithDevTools } from 'remote-redux-devtools'
 import { enableBatching } from 'redux-batched-actions'
 import createSagaMiddleware from 'redux-saga'
@@ -39,10 +39,13 @@ export default function configureStore () {
     comments,
     example,
   }))
+  const reduxInspectorActivator = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-  const store = createStore(rootReducer, enhancer)
+  const store = createStore(rootReducer, reduxInspectorActivator(
+    applyMiddleware(...middlewares)
+    ) , )
   window.store = store
-  sagaMiddleware.run(rootSaga)
+  // sagaMiddleware.run(rootSaga)
 
   return store
 }

@@ -2,6 +2,8 @@ import { handleActions, createAction } from 'redux-actions'
 import Immutable from 'seamless-immutable'
 import axios from 'axios'
 
+import {COMMENTS_ADDING} from '../comments/commentsReducer'
+
 // ---
 // CONSTANTS
 // ---
@@ -86,6 +88,10 @@ const reducerMap = {
     },
     [ARTICLES_ERROR]: (state, action) => {
       return state.set("error", true)
+    },
+    [COMMENTS_ADDING]: (state, action) => {
+      console.log('BAAAAM!')
+      return Immutable.setIn(state, ['entities', action.payload.articleId, "comments"], [...state.articles.entities[action.payload.articleId].comments, action.payload.id])
     }
   }
 

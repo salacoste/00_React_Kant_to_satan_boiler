@@ -2,6 +2,7 @@ import {createSelector} from 'reselect'
 import {getArticles} from '../articles/articlesSelector'
 
 
+
 export const getComments = (store,ownProps) => store.comments.entities
 export const getCommentsInArray = (store, ownProps) => {
   // store.comments.loaded && console.log("CommentsArray", Object.values(store.comments.entities))
@@ -17,7 +18,7 @@ export const filteredComments = (store, ownProps) => {
     const comments = Object.values(store.comments.entities).filter((comment)=> {
       return store.articles.entities[ownProps.articleId].comments.includes(comment.id)
     })
-    console.log('filtered comments', comments)
+    //console.log('filtered comments', comments)
     return comments
   }
 }

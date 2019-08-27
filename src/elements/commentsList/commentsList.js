@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 
 import {Accordion, Card, Button, Row, Col} from 'react-bootstrap'
 import {normalizedArticles, normalizedComments} from '../../utils/fixtures'
-import {ListGroup} from 'react-bootstrap'
+import {ListGroup, Form, } from 'react-bootstrap'
+import BaseForm, {} from '../forms/BaseForm'
 
 import {filteredComments} from '../../store/reducers/comments/commentsSelector'
+import {comments_add_thunk} from '../../store/reducers/comments/commentsReducer'
 
 
 
@@ -59,16 +61,91 @@ export class CommentList extends PureComponent {
               )
             }): <p>There are no comments</p>}
             </ListGroup>
+            <ListGroup>
+              <ListGroup.Item key={this.props.articleId}>
+                <BaseForm
+                  initialValues={{username: '', text: ''}}
+                  //validationSchema={validationSchema}
+                  validate={validate}
+                  onSubmit={(values, { setSubmitting })=> {return onSubmit(values, setSubmitting, this.props.addComment, this.props.articleId, {a: 2333, b: 1111, cc: 'string add'})}}
+                  render={render}
+                  /> 
+              </ListGroup.Item>
+            </ListGroup>
             </Col>
           </Row>
         }
       </div>
     )
   }
-  
-  
+}
 
+const validate = values => {
+  let errors = {};
+  if (!values.username) {
+    errors.username = 'Required Username';
+  } 
+  if (!values.text) {
+    errors.text = 'Required Comment'
+  }
+  return errors;
+}
 
+const onSubmit = (values, setSubmitting, add_comment, articleId, ...rest) => {
+  console.log('222333', values, add_comment, rest)
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      add_comment({...values, articleId})
+      setSubmitting(false);
+    }, 400);
+}
+
+const render = (props) => {
+  return (
+    <Fragment>
+        <Form noValidate onSubmit={props.handleSubmit}>
+          <Form.Row>
+            <Form.Group as={Col} md="4" controlId="validationFormik01">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={props.values.username}
+                onChange={props.handleChange}
+                isValid={props.touched.username && !props.errors.username}
+              />
+              {props.errors.username && props.touched.username && props.errors.username}
+              <Form.Control.Feedback>Username looks good</Form.Control.Feedback>
+            </Form.Group>
+            </Form.Row>
+
+            <Form.Row>
+            <Form.Group as={Col} md="4" controlId="validationFormik02">
+              <Form.Label>Comment</Form.Label>
+              <Form.Control
+                as="textarea" 
+                rows="3"
+                type="text"
+                name="text"
+                placeholder="Comment"
+                value={props.values.text}
+                onChange={props.handleChange}
+                isValid={props.touched.text && !props.errors.text}
+              />
+              {props.errors.text && props.touched.text && props.errors.text}
+              <Form.Control.Feedback>Looks good</Form.Control.Feedback>
+            </Form.Group>
+            </Form.Row>     
+            
+            <Form.Row>
+            <Button variant="primary" type="submit" disabled={props.isSubmitting}>
+              Submit
+            </Button>
+            </Form.Row>
+        </Form>
+    </Fragment>
+        )
 }
 
 
@@ -87,6 +164,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = {
   // loadArticles: articles_thunk,
   // loadComments: comments_thunk,
+  addComment: comments_add_thunk,
 }
 
 
