@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react'
 import { Switch, Route, withRouter } from 'react-router-dom'
 
+import MainPage from 'src/pages/main/MainPageContainer'
 import MainLayout from 'src/layouts/MainLayout'
 
-import MainPage from 'src/pages/main/MainPageContainer'
+import DayPickerLayout from 'src/layouts/DayPickerLayout'
+import DayPicker from 'src/pages/daypicker/DayPickerContainer'
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
   <Route {...rest} render={props => {
@@ -22,7 +24,7 @@ export class Routes extends PureComponent {
     return (
       <Switch>
         <AppRoute exact path='/' layout={MainLayout} component={MainPage} />
-        
+        <AppRoute exact path='/daypicker' layout={DayPickerLayout} component={DayPicker}/>
       </Switch>
     )
   }

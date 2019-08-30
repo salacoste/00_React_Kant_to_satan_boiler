@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import * as Bootstrap from 'react-bootstrap'
 let {Navbar, Nav, Form, FormControl, Button, NavDropdown, Row, Container} = Bootstrap
 
-class MainLayout extends PureComponent {
+class DayPickerLayout extends PureComponent {
   render () {
-    console.log('MainLayout props', this.props)
+    console.log('DayPickerLayout props', this.props)
     return (
       <Wrapper >
             <Navbar bg="dark" expand="lg" variant="dark" >
-              <Navbar.Brand>Article Main Page</Navbar.Brand>
+              <Navbar.Brand>DayPicker Page</Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
@@ -30,4 +30,4 @@ const Wrapper = styled.div`
   height: 100%,
 `
 
-export default MainLayout
+export default DayPickerLayout
