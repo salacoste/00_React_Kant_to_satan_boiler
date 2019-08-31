@@ -15,7 +15,7 @@ import Router from 'src/router'
 
 export class App extends Component {
   state = {
-    isLoaded: true
+    isLoaded: false
   }
 
   asyncF = async () => {
@@ -26,7 +26,7 @@ export class App extends Component {
 
   componentWillMount() {
     // this.props.loadSession()
-    // !this.state.isLoaded && this.asyncF()
+    !this.state.isLoaded && this.asyncF()
   }
 
 

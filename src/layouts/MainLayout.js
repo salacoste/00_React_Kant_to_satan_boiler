@@ -1,23 +1,17 @@
 import React, { PureComponent } from 'react'
 import styled from 'styled-components'
 import * as Bootstrap from 'react-bootstrap'
-let {Navbar, Nav, Form, FormControl, Button, NavDropdown, Row, Container} = Bootstrap
+import NavBarElement from '../elements/navbar/Navbar'
+
+
+let {Navbar, Nav, Form, FormControl, Button, NavDropdown, Row, Container, NavItem} = Bootstrap
 
 class MainLayout extends PureComponent {
   render () {
     console.log('MainLayout props', this.props)
     return (
       <Wrapper >
-            <Navbar bg="dark" expand="lg" variant="dark" >
-              <Navbar.Brand>Article Main Page</Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                  <Nav.Link href="/">Home</Nav.Link>
-                  <Nav.Link href="/daypicker">DayPicker</Nav.Link>
-                </Nav>
-              </Navbar.Collapse>
-            </Navbar>
+            <NavBarElement/>
           <main>
           { this.props.children }
           </main>
