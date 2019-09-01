@@ -10,16 +10,16 @@ let {Navbar, Nav, Button, NavDropdown, Row, Container, NavItem} = Bootstrap
 class NavBarElement extends PureComponent {
   render() {
     return <Fragment>
-              <Navbar bg="dark" expand="lg" variant="dark" collapseOnSelect>
+              <Navbar bg="dark" expand="sm" variant="dark" collapseOnSelect>
                       <Navbar.Brand>Article Main Page</Navbar.Brand>
                       <Navbar.Toggle aria-controls="basic-navbar-nav" />
                       <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                          <LinkContainer to='/'>
+                          <LinkContainer exact to='/'>
                           <Nav.Link>Home</Nav.Link>
                           </LinkContainer>
-                          <LinkContainer to='/daypicker'>
-                          <Nav.Link >DayPicker</Nav.Link>
+                          <LinkContainer exact to='/daypicker'>
+                          <Nav.Link>DayPicker</Nav.Link>
                           </LinkContainer>
                         </Nav>
                       </Navbar.Collapse>

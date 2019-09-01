@@ -32,10 +32,11 @@ class ArticleList extends PureComponent {
     }
 
     return this.props.articles.map((item)=> {
+      const date = new Date(item.date).toLocaleString()
       return (
       <Card key={item.id}>
         <Card.Body>
-          <small>Date: {item.date}</small>
+          <small>Date: {date}</small>
           <h3>{item.title}</h3>
         </Card.Body>
         <Accordion.Toggle as={Card.Header} eventKey={item.id}>
