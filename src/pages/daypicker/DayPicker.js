@@ -3,7 +3,7 @@ import ArticleList from '../../elements/articleList/articleList'
 import {Container, Row, Col} from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
-import {DayPicker as DayPickerC} from '../../elements/daypicker/DayPicker'
+import {Calendar} from '../../elements/daypicker/DayPicker'
 
 
 //import {CSSTransition, TransitionGroup} from 'react-transition-group'
@@ -19,6 +19,12 @@ class DayPicker extends PureComponent {
 
   }
 
+
+  async componentDidMount() {
+    await this.props.loadArticles()
+    setTimeout(()=>{console.log('12312333', this.props.articles, this.props.article_dates)}, 2000)
+  }
+
   render() {
     return (
       <Fragment>
@@ -30,7 +36,7 @@ class DayPicker extends PureComponent {
             </h1>
           </Col>
           <Col sm={12} className='text-center'>
-            <DayPickerC/>
+            <Calendar articleDates = {this.props.article_dates} />
           </Col>
         </Row>
         </Container>

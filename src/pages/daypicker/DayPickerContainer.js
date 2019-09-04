@@ -4,7 +4,7 @@ import DayPicker from './DayPicker'
 import {articles_thunk} from '../../store/reducers/articles/articlesReducer'
 import {comments_thunk} from '../../store/reducers/comments/commentsReducer'
 
-import {getArticlesInArray} from '../../store/reducers/articles/articlesSelector'
+import {getArticlesInArray, getDatesOfArticles} from '../../store/reducers/articles/articlesSelector'
 import {getCommentsInArray} from '../../store/reducers/comments/commentsSelector'
 
 
@@ -13,6 +13,7 @@ const mapStateToProps = (state, props) => {
   return {
   articles: getArticlesInArray(state, props),
   comments: getCommentsInArray(state,props),
+  article_dates: getDatesOfArticles(state, props)
   }
 }
 

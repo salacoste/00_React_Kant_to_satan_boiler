@@ -31,8 +31,6 @@ static defaultProps = {
 
 constructor(props) {
     super(props)
-    this.handleFromChange = this.handleFromChange.bind(this);
-    this.handleToChange = this.handleToChange.bind(this);
     this.state = {
       from: undefined,
       to: undefined,
@@ -45,29 +43,40 @@ constructor(props) {
   }
 
 
-  showFromMonth() {
+
+  showFromMonth = () => {
     const { from, to } = this.state;
     if (!from) {
-      return;
+      return
     }
     if (moment(to).diff(moment(from), 'months') < 2) {
       this.to.getDayPicker().showMonth(from);
     }
   }
 
-  handleFromChange(from) {
+  handleFromChange = (from, modifiers, dayPickerInput) => {
     // Change the from date and focus the "to" input field
-    this.setState({ from });
+    const input = dayPickerInput.getInput();
+
+    this.setState({ 
+        from, 
+        isEmpty: !input.value.trim(),  });
   }
 
-  handleToChange(to) {
+  handleToChange = (to) => {
     this.setState({ to }, this.showFromMonth);
   }
 
-
   render() {
     const { from, to } = this.state;
-    const modifiers = { start: from, end: to };
+    const modifiers = { 
+        start: (day) => {day === from}, 
+        end: (day)=> {new Date(day) === new Date(to)},
+        date: (day)=> {
+            return true
+            // return this.props.articleDates.includes(day)? true : false
+        }  
+    };
     console.log('www', from, to)
 
     return (
@@ -99,12 +108,14 @@ constructor(props) {
                     parseDate={parseDate}
                     dayPickerProps={{
                         selectedDays: [from, { from, to }],
-                        disabledDays: { after: to },
+                        disabledDays: { after: new Date(to) },
                         toMonth: to,
-                        modifiers,
-                        numberOfMonths: 2,
+                        initialMonth : new Date(2016,5),
+                        modifiers : {modifiers},
+                        // modifiersStyles : {modifiersStyles},
+                        numberOfMonths: 4,
                         onDayClick: () => this.to.getInput().focus(),
-                      }}
+                    }}
                     onDayChange={this.handleFromChange}
                     />{' '}
                     —{' '}
@@ -118,13 +129,14 @@ constructor(props) {
                         formatDate={formatDate}
                         parseDate={parseDate}
                         dayPickerProps={{
-                            selectedDays: [from, { from, to }],
-                            disabledDays: { before: from },
-                            modifiers,
-                            month: from,
-                            fromMonth: from,
-                            numberOfMonths: 2,
-                          }}
+                        selectedDays: [from, { from, to }],
+                        disabledDays: { before: from },
+                        //   modifiersStyles : {modifiersStyles},
+                        modifiers : {modifiers},
+                        month: from,
+                        fromMonth: from,
+                        numberOfMonths: 4,
+                        }}
                         onDayChange={this.handleToChange}
                     />
                     </span>

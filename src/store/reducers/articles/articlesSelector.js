@@ -2,7 +2,7 @@ import {createSelector} from 'reselect'
 
 export const getArticles = (store,ownProps) => store.articles.entities
 export const getArticlesInArray = (store, ownProps) => {
-  store.articles.loaded && console.log("articleArray", Object.values(store.articles.entities))
+  // store.articles.loaded && console.log("articleArray", Object.values(store.articles.entities))
   return Object.values(store.articles.entities)
 }
 export const getComments = (store,ownProps) => store.comments.entities
@@ -13,3 +13,10 @@ export const getFilteredArticles = createSelector([getArticles, getComments], (a
   // console.log('from articles selector, articles is ', articles, 'comments are ', comments)
   return articles
 })
+export const getDatesOfArticles = createSelector([getArticlesInArray], (articles)=> {
+  let dates = []
+  articles.map((article)=> { 
+    dates.push(new Date(article.date))
+  })
+  return dates
+} )
