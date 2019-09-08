@@ -21,6 +21,9 @@ class NavBarElement extends PureComponent {
                           <LinkContainer exact to='/daypicker'>
                           <Nav.Link>DayPicker</Nav.Link>
                           </LinkContainer>
+                          <LinkContainer exact to='/allcomments'>
+                          <Nav.Link>All Comments</Nav.Link>
+                          </LinkContainer>
                         </Nav>
                       </Navbar.Collapse>
                     </Navbar>

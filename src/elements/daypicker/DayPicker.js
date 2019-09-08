@@ -12,7 +12,7 @@ import moment from 'moment';
 import './style.css'
 
 import CSSTransition from 'react-addons-css-transition-group'
- 
+
 
 
 let {Navbar, Nav, Button, NavDropdown, Row, Container, NavItem, Col} = Bootstrap
@@ -44,6 +44,17 @@ constructor(props) {
     
   }
 
+  componentDidUpdate(prevProps) {
+    console.log('DidUpdate', this.props.articleDates)
+    if (this.props.articleDates !== prevProps.articleDates && this.props.articleDates.length > 0) {
+      this.articleDates = this.props.articleDates.reduce((acc, date)=> {
+        acc.push(new Date(date.getFullYear(), date.getMonth(), date.getDay(), 12, 0, 0, 0))
+        return acc
+      }, [])
+      console.log('000', this.articleDates)
+    }
+  }
+
 
   showFromMonth() {
     const { from, to } = this.state;
@@ -57,19 +68,36 @@ constructor(props) {
 
   handleFromChange(from) {
     // Change the from date and focus the "to" input field
-    this.setState({ from });
+    if (this.state.from && this.state.to) {
+      this.props.filterArticle({from: from})
+      this.setState({from, isEmpty: false})
+    } else {
+      this.props.filterArticle({from: from, to: this.state.to})
+      this.setState({from})
+    }
   }
 
   handleToChange(to) {
-    this.setState({ to }, this.showFromMonth);
+    this.props.filterArticle({to: to, from: this.state.from})
+    this.setState({ to, isEmpty: false }, this.showFromMonth);
   }
 
 
   render() {
     const { from, to } = this.state;
-    const modifiers = { start: from, end: to };
-    console.log('www', from, to)
-
+    const modifiers = 
+    { start: from, end: to, today: new Date(),
+      commentDate: (day)=> {
+      day.setHours(12,0,0,0);
+      
+    for (let date of this.articleDates) {
+    if (date.getTime() === day.getTime() ) {
+      return true
+    }
+    }
+    return false
+  }
+  }
     return (
 <Fragment>
     <Container>
@@ -92,7 +120,8 @@ constructor(props) {
                     <DayPickerInput
                     inputProps={{className: 'form-control'}}
                     value={from}
-                    placeholder="From"
+                    //placeholder="From"
+                    placeholder={`${formatDate(new Date(), 'DD.MM.YYYY', 'RU')}`}
                     format="DD.MM.YYYY"
                     keepFocus = {false}
                     formatDate={formatDate}
@@ -100,6 +129,7 @@ constructor(props) {
                     dayPickerProps={{
                         selectedDays: [from, { from, to }],
                         disabledDays: { after: to },
+                        initialMonth: new Date(2016, 5),
                         toMonth: to,
                         modifiers,
                         numberOfMonths: 2,

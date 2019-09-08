@@ -26,6 +26,26 @@
     margin-left: -198px;
   }
 
+  .InputFromTo .DayPicker-Day--today {
+    background-color: rgb(30, 101, 168);
+    color: rgb(0, 255, 255);
+    border-radius: 50%;
+
+  }
+
+  .InputFromTo .DayPicker-Day--today:hover {
+    border-radius: 0
+  }
+
+  .InputFromTo .DayPicker-Day--commentDate {
+    color: white;
+    background: #79a7db;
+    border-radius: 50%!important;
+  }
+
+  .InputFromTo .DayPicker-Day--commentDate.DayPicker-Day--outside {
+    background-color: white
+  }
   
 .calendar-enter {
   opacity: 0.01;
