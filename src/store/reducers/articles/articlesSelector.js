@@ -13,6 +13,10 @@ export const getFilter = (store, ownProps) => {
   return store.articles.filter
 }
 
+export const getLoadStatus = (store, ownProps) => {
+  return store.articles.loaded
+}
+
 export const getFilteredArticles = createSelector([getArticles, getComments], (articles, comments)=> {
   // console.log('from articles selector, articles is ', articles, 'comments are ', comments)
   return articles

@@ -9,6 +9,11 @@ export const getCommentsInArray = (store, ownProps) => {
   // store.comments.loaded && console.log("CommentsArray", Object.values(store.comments.entities))
   return Object.values(store.comments.entities)
 }
+
+export const getLoadStatus = (store, ownProps) => {
+  return store.comments.loaded
+}
+
 export const filteredComments = (store, ownProps) => {
   // console.log('22111', store.articles.entities[ownProps.articleId])
   if (!store.articles.entities[ownProps.articleId].comments || store.articles.entities[ownProps.articleId].comments.length === 0) {
