@@ -18,18 +18,53 @@
 // })
 
 
-async function asyncFetch() {
-  console.log('Start fetching..')
-  await setTimeout(()=> {
-    console.log('setTimeout is logging..')
-  }, 2000)
+// async function asyncFetch() {
+//   console.log('Start fetching..')
+//   await setTimeout(()=> {
+//     console.log('setTimeout is logging..')
+//   }, 2000)
 
-  const request = await new Promise((res)=> {
-    setTimeout(()=> {
-      console.log('Internal console log')
-      res()
-    },1500)
+//   const request = await new Promise((res)=> {
+//     setTimeout(()=> {
+//       console.log('Internal console log')
+//       res()
+//     },1500)
+//   })
+// }
+
+// asyncFetch()
+
+
+// let Obj = Object.assign({}, {})
+let O = Object.assign({}, {b: 4})
+console.log('getOwnProperties', Object.getOwnPropertyDescriptors(O))
+
+Object.defineProperty(O, 
+  'a', {enumerable: false, configurable: true, writable:true, value: 666}
+  )
+
+console.log(Object.getOwnPropertyDescriptors(O))
+
+Object.defineProperty(O, 
+  'a', {
+    value: 123,
+    enumerable: false
   })
-}
+console.log(Object.getOwnPropertyDescriptors(O))
+console.log('enum:false property', O.a)
 
-asyncFetch()
+delete O.a
+console.log('property a has been deleted', Object.getOwnPropertyDescriptors(O))
+
+
+// console.log('just console.log', O)
+
+
+let arr = [2, null, 4, 56, 7]
+let it = arr[Symbol.iterator]()
+console.log(it.next())
+
+for (let k of arr) {
+console.log(k)
+
+}

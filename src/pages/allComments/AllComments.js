@@ -73,7 +73,7 @@ class AllComments extends PureComponent {
       )
     }
 
-    console.log('MATCH!!', this.props)
+    console.log('AllComments component props', this.props)
 
     return (
       <Fragment>
@@ -109,7 +109,7 @@ class AllComments extends PureComponent {
                 All
               </Button>
             </ButtonGroup>
-            <Button className="ml-3" onClick={this.props.history.length>0 && (this.props.history.goBack)} float="center">
+            <Button className="ml-3" onClick={this.props.history.goBack} float="center">
               Go Back
             </Button>
           </Col>
