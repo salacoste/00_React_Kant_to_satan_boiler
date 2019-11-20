@@ -49,5 +49,4 @@ module.exports = {
             {"name": "Link", "linkAttribute": "to"}
           ]
         }
-    }
-};
+    };
