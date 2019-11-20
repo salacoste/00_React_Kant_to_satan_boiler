@@ -12,25 +12,26 @@ import {CSSTransition} from 'react-addons-css-transition-group'
 
 class DayPicker extends PureComponent {
   static propTypes = {
-  filter: PropTypes.object,
+  filter: PropTypes.array,
   }
 
   static defaultProps = {
-
+    filter: []
   }
 
 
   async componentDidMount() {
+    // console.log('before await', this.props.filter)
     await this.props.loadArticles()
+    // await console.log('after await', this.props.filter)
+
     // setTimeout(()=>{console.log('12312333', this.props.articles, this.props.article_dates)}, 2000)
   }
   componentDidUpdate(prevProps) {
     console.log('666', this.props.filter)
-    //console.log('777', this.props.article)
   }
 
   render() {
-    // console.log('22', this.props.filter)
     return (
       <Fragment>
         <Container>

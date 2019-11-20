@@ -53,6 +53,8 @@ constructor(props) {
       }, [])
       console.log('000', this.articleDates)
     }
+    if(this.articleDates === undefined) this.articleDates = []
+    console.log(this.articleDates)
   }
 
 
